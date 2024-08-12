@@ -42,8 +42,7 @@ public class ProductRepo(StoreContext context) : IProductRepo
             _ => products.OrderBy(x => x.Name)
         };
         
-     
-        return await products.ToListAsync();
+        return await products.Skip(5).Take(5).ToListAsync();
     }
     
 
