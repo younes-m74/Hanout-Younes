@@ -1,3 +1,4 @@
+using API.Middleware;
 using Core.Interfaces;
 using InfraStructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,15 @@ builder.Services.AddDbContext<StoreContext>(options =>
 });
 builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped(typeof(IGenericRepo<>), typeof(GenericRepo<>));
+builder.Services.AddCors();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://localhost:4200"));
+
 app.MapControllers();
 
 try
