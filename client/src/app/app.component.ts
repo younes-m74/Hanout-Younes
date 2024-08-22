@@ -4,25 +4,18 @@ import { HeaderComponent } from "./layout/header/header.component";
 import { HttpClient } from '@angular/common/http';
 import { Product } from './shared/models/product';
 import { Pagination } from './shared/models/pagination';
+import { ShopService } from './core/services/shop.service';
+import { ShopComponent } from "./features/shop/shop.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, ShopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
-  baseUrl = 'https://localhost:5001/api/'
-  private http = inject(HttpClient);
-  title = 'Hanout-Younes';
-  products: Product[] = [];
+export class AppComponent {
 
-  ngOnInit(): void {
-    this.http.get<Pagination<Product>>(this.baseUrl + 'Product').subscribe({
-      next: response => this.products = response.data,
-      error: error => console.log(error),
-      complete: () => console.log('complete')
-    })
-  }
+  title = 'Hanout-Younes'
+  
 }
